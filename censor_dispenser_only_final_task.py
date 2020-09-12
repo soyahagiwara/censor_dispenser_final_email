@@ -10,6 +10,7 @@ negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "ala
 
 def censor(email, proprietary_terms, negative_words):
     words = proprietary_terms + negative_words
+    words = words + words.title() + words.upper() + words.lower()  # Adding title, uuper, lower case version of words in case we need to censor such words.
     for word in words:
         email = email.replace(word, 'X'*len(word))
     # Now the email is censored. But we still need to blur words next to the censored ones.
@@ -25,7 +26,7 @@ def censor(email, proprietary_terms, negative_words):
         for j in range(len(split_email[i])):
             if 'X' in split_email[i][j]:
                 # The following indented codes are rather messy. But necessary to prevent IndexError.
-                # For example, if we wanted to blur words next to 'XXXXXXXXXX' in the previous example, we would get an IndesError since that's the last word.
+                # For example, if we wanted to blur words next to 'XXXXXXXXXX' in the previous example, we would get an IndexError because that's the last word.
                 if 0 <= j-1 and j+1 <= len(split_email[i])-1:
                     new_split_email[i][j-1] = 'X'*len(split_email[i][j-1])
                     new_split_email[i][j+1] = 'X'*len(split_email[i][j+1])
