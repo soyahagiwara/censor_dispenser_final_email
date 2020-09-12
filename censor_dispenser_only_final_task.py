@@ -10,7 +10,6 @@ negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "ala
 
 def censor(email, proprietary_terms, negative_words):
     words = proprietary_terms + negative_words
-    words = words + words.title() + words.upper() + words.lower()  # Adding title, uuper, lower case version of words in case we need to censor such words.
     for word in words:
         email = email.replace(word, 'X'*len(word))
     # Now the email is censored. But we still need to blur words next to the censored ones.
